@@ -1,0 +1,208 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{4DE826B4-FB25-4243-8874-06ADEE73684B}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Aden.Model</RootNamespace>
+    <AssemblyName>Aden.Model</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Net" />
+    <Reference Include="System.Net.Http.Formatting">
+      <HintPath>..\..\ADENSFEED\ADEN\bin\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Helpers.resources">
+      <HintPath>..\..\ADENSFEED\ADEN\bin\zh-Hans\System.Web.Helpers.resources.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Account\AccountCostUnit.cs" />
+    <Compile Include="Account\AccountData.cs" />
+    <Compile Include="Account\AccountMenu.cs" />
+    <Compile Include="Account\AccountUser.cs" />
+    <Compile Include="Account\AccountUserMenu.cs" />
+    <Compile Include="Account\LoginUser.cs" />
+    <Compile Include="BaseRequest.cs" />
+    <Compile Include="Common\Company.cs" />
+    <Compile Include="Common\CompanyAddress.cs" />
+    <Compile Include="Common\CostUnit.cs" />
+    <Compile Include="Common\DateRange.cs" />
+    <Compile Include="Common\Language.cs" />
+    <Compile Include="Common\Site.cs" />
+    <Compile Include="Interface\IWcfAdenPay.cs" />
+    <Compile Include="Log.cs" />
+    <Compile Include="LogDetail.cs" />
+    <Compile Include="Common\SingleField.cs" />
+    <Compile Include="MastData\AuthParam.cs" />
+    <Compile Include="MastData\CCMast.cs" />
+    <Compile Include="MastData\DataLog.cs" />
+    <Compile Include="MastData\GetToNextWorkingDayParam.cs" />
+    <Compile Include="MastData\SqlMast.cs" />
+    <Compile Include="MastData\Supplier.cs" />
+    <Compile Include="MenuData\Item.cs" />
+    <Compile Include="MenuData\ItemBOM.cs" />
+    <Compile Include="MenuData\ItemClass.cs" />
+    <Compile Include="MenuData\ItemColor.cs" />
+    <Compile Include="MenuData\ItemNutrition.cs" />
+    <Compile Include="MenuData\ItemProcess.cs" />
+    <Compile Include="MenuData\itemSequence.cs" />
+    <Compile Include="MenuData\menuOrderHeadObj.cs" />
+    <Compile Include="MenuData\paramType.cs" />
+    <Compile Include="MenuData\WeeklyMenu.cs" />
+    <Compile Include="MenuOrder\CCWindowMeals.cs" />
+    <Compile Include="MenuOrder\CCWindows.cs" />
+    <Compile Include="MenuOrder\CCWhs.cs" />
+    <Compile Include="MastData\CClassSupplierParam.cs" />
+    <Compile Include="MenuOrder\ItemClassHierarchy.cs" />
+    <Compile Include="MenuOrder\ItemClassMaintain.cs" />
+    <Compile Include="MenuOrder\POItem.cs" />
+    <Compile Include="MenuOrder\MealTypeParam.cs" />
+    <Compile Include="MenuOrder\POItemParam.cs" />
+    <Compile Include="MenuOrder\MenuOrderLine.cs" />
+    <Compile Include="MenuOrder\MenuOrderHead.cs" />
+    <Compile Include="MenuOrder\SaveItemClassMaintainDataParam.cs" />
+    <Compile Include="MenuOrder\SaveMenuOrderParam.cs" />
+    <Compile Include="MenuOrder\MenuOrderPurchaseParam.cs" />
+    <Compile Include="MenuOrder\tblDataMapping.cs" />
+    <Compile Include="Order\OrderHead.cs" />
+    <Compile Include="Order\OrderLine.cs" />
+    <Compile Include="Order\Purchase\PurchaseItem.cs" />
+    <Compile Include="Order\Purchase\PurchaseOrderData.cs" />
+    <Compile Include="Order\Purchase\PurchaseOrderLine.cs" />
+    <Compile Include="Order\Purchase\PurchaseReceiptData.cs" />
+    <Compile Include="Order\Purchase\PurchaseReceiptLine.cs" />
+    <Compile Include="Order\Purchase\PurchaseReceiptSupplierDate.cs" />
+    <Compile Include="Order\Purchase\PurchaseRequest.cs" />
+    <Compile Include="Order\Warehouse\CountsData.cs" />
+    <Compile Include="Order\Warehouse\CountsDate.cs" />
+    <Compile Include="Order\Warehouse\CountsLine.cs" />
+    <Compile Include="Order\Warehouse\CountsUnit.cs" />
+    <Compile Include="Order\Warehouse\ItemQtyCost.cs" />
+    <Compile Include="Order\Warehouse\ItemTrans.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Net\Response.cs" />
+    <Compile Include="MastData\CClassSupplier.cs" />
+    <Compile Include="Purchase\PurchaseOrderLineDetail.cs" />
+    <Compile Include="Purchase\PurchaseOrderLine.cs" />
+    <Compile Include="Purchase\PurchaseOrderHead.cs" />
+    <Compile Include="RightsData\CCOptions.cs" />
+    <Compile Include="RightsData\Items.cs" />
+    <Compile Include="RightsData\ccWindowMeals.cs" />
+    <Compile Include="RightsData\Param.cs" />
+    <Compile Include="RightsData\ProductType.cs" />
+    <Compile Include="RightsData\WindowOptions.cs" />
+    <Compile Include="SDK\Finance\Entry.cs" />
+    <Compile Include="SDK\Finance\EntryHead.cs" />
+    <Compile Include="SDK\Finance\EntryLine.cs" />
+    <Compile Include="SiteDIY\DBSite.cs" />
+    <Compile Include="SiteDIY\ItemPrice.cs" />
+    <Compile Include="SiteDIY\Site.cs" />
+    <Compile Include="SiteDIY\SitePost.cs" />
+    <Compile Include="SiteDIY\SiteSurvey.cs" />
+    <Compile Include="SOAccount\LoginUser.cs" />
+    <Compile Include="SOAccount\AccountUser.cs" />
+    <Compile Include="SOAccount\UserAuthParam.cs" />
+    <Compile Include="SOCommon\CompanyAddress.cs" />
+    <Compile Include="SOCommon\Config.cs" />
+    <Compile Include="SOCommon\Language.cs" />
+    <Compile Include="SOMastData\AuthCompany.cs" />
+    <Compile Include="SOMastData\LangMast.cs" />
+    <Compile Include="SOMastData\LangMastList.cs" />
+    <Compile Include="SOMastData\LangVersion.cs" />
+    <Compile Include="SOMastData\TblMenu.cs" />
+    <Compile Include="SOMastData\TransLog.cs" />
+    <Compile Include="SOMastData\MultiCoCostCenterMatch.cs" />
+    <Compile Include="SOMastData\SalesPeriodUpdateParam.cs" />
+    <Compile Include="SOMastData\SalesInvoiceSaveParam.cs" />
+    <Compile Include="SOMastData\ServiceType.cs" />
+    <Compile Include="SOMastData\SalesOrderPeriod.cs" />
+    <Compile Include="SOMastData\SalesInvoice.cs" />
+    <Compile Include="SOMastData\SalesInvoiceParam.cs" />
+    <Compile Include="SOMastData\SalesPeriodParam.cs" />
+    <Compile Include="SOMastData\SalesPeriod.cs" />
+    <Compile Include="SOMastData\ReadyToImportErp.cs" />
+    <Compile Include="SOMastData\Status.cs" />
+    <Compile Include="SOMastData\MenuAction.cs" />
+    <Compile Include="SOMastData\Contract.cs" />
+    <Compile Include="SOMastData\Company.cs" />
+    <Compile Include="SOMastData\CostCenter.cs" />
+    <Compile Include="SOMastData\PriceUnit.cs" />
+    <Compile Include="SOMastData\Product.cs" />
+    <Compile Include="SOMastData\SalesOrderItem.cs" />
+    <Compile Include="SOMastData\SalesOrder.cs" />
+    <Compile Include="SOMastData\Tax.cs" />
+    <Compile Include="SOMastData\Payment.cs" />
+    <Compile Include="SOMastData\Currency.cs" />
+    <Compile Include="SOMastData\Customer.cs" />
+    <Compile Include="Upload\UploadFileName.cs" />
+    <Compile Include="Upload\UploadResponse.cs" />
+    <Compile Include="WeChat\AdenPayUserCard.cs" />
+    <Compile Include="WeChat\CardInfo.cs" />
+    <Compile Include="WeChat\CardInfoParam.cs" />
+    <Compile Include="WeChat\TransLogParam.cs" />
+    <Compile Include="WeChat\UserBalance.cs" />
+    <Compile Include="WeChat\UserInfo.cs" />
+    <Compile Include="WeChat\WeChat.cs" />
+    <Compile Include="WeChat\TransLog.cs" />
+    <Compile Include="WeChat\WeChatConfig.cs" />
+    <Compile Include="WeChat\WeChatResult.cs" />
+    <Compile Include="WeChat\WxAccessToken.cs" />
+    <Compile Include="WeChat\WxBarCode.cs" />
+    <Compile Include="WeChat\WxOrder.cs" />
+    <Compile Include="WeChat\WxPayNotifyData.cs" />
+    <Compile Include="WeChat\WxUserCard.cs" />
+    <Compile Include="WeChat\WxUserMast.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ActiveDirecotry\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
