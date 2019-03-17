@@ -1664,6 +1664,7 @@ namespace Aden.DAL.MenuOrder
             {
                 mealCode = q.mealCode,
                 windowType = q.windowType,
+                windowType_en = q.windowType_en,
                 sort = q.sort
             }).Select(q =>
             {
@@ -1672,6 +1673,7 @@ namespace Aden.DAL.MenuOrder
                     siteGuid = cc.siteGuid,
                     mealCode = q.Key.mealCode,
                     windowType = q.Key.windowType,
+                    windowType_en = q.Key.windowType_en,
                     sort = q.Key.sort,
                     startDate = date.ToString("yyyy-MM-dd")
                 };
@@ -1681,8 +1683,13 @@ namespace Aden.DAL.MenuOrder
                     var r = q.FirstOrDefault(p => DateTime.Parse(p.mealDate).Equals(date.AddDays(i)));
                     PropertyInfo property = typeof(WeeklyMenu).GetProperty("foodNames" + (i + 1));
                     property.SetValue(d, r == null ? "" : r.foodNames);
+
+                    property = typeof(WeeklyMenu).GetProperty("foodNames_en" + (i + 1));
+                    property.SetValue(d, r == null ? "" : r.foodNames_en);
                 }
+               
                 return d;
+
             }).ToList();
 
             return  tmp;        
@@ -1696,8 +1703,9 @@ namespace Aden.DAL.MenuOrder
                                  " , M.SITEGUID " +
                                  " , CONVERT(VARCHAR(10),M.MEALDATE,23) MEALDATE " +
                                  " , M.MEALCODE" +
-                                 " , M.WINDOWTYPE" +
+                                 " , M.WINDOWTYPE,M.WINDOWTYPE_EN " +
                                  " , ltrim(rtrim(M.FOODNAMES)) FOODNAMES " +
+                                 " , ltrim(rtrim(M.FOODNAMES_EN)) FOODNAMES_EN "+
                                  " , M.SORT " +
                               " FROM SUZCATMenu (NOLOCK) AS M " +
                              " WHERE M.SITEGUID = '{0}' AND M.DELETEUSER IS NULL " +
@@ -1720,6 +1728,7 @@ namespace Aden.DAL.MenuOrder
         /// <returns></returns>
         public int SaveMenuOrder_SUZHYC(WeeklyMenu param)
         {
+
             if (param == null || param.menuOrderHeadObj == null || !param.menuOrderHeadObj.Any())
                 return 0;
 
@@ -1729,8 +1738,11 @@ namespace Aden.DAL.MenuOrder
             DateTime now = DateTime.Now;
             
             //foodNames1, ... foodNames7
-            var properties = typeof(WeeklyMenu).GetProperties().Where(q=>q.Name.ToLower().Contains("foodnames")
-                && q.Name.ToLower() != "foodnames").OrderBy(q=>q.Name);
+            var properties = typeof(WeeklyMenu).GetProperties().Where(q=>q.Name.ToLower().Contains("foodnames") 
+                           && !q.Name.ToLower().Contains("foodnames_en")
+                           && q.Name.ToLower() != "foodnames").OrderBy(q=>q.Name);
+            
+            
 
             int xsort = 0; //记录顺序
             string oldMealCode = "";
@@ -1765,13 +1777,16 @@ namespace Aden.DAL.MenuOrder
                    }
 
                    int x = 0;
+                    
                     return properties.Select(y => new {
                         mealCode = q.mealCode.ToStringTrim(),
                         meal = Meal,
                         windowType = q.windowType.ToStringTrim(),
+                        windowType_en = q.windowType_en.ToStringTrim(),
                         sort = xsort.ToString(),
                         startDate = date.AddDays(x++).ToString("yyyy-MM-dd"),
-                        foodNames = y.GetValue(q).ToStringTrim(),
+                        foodNames = y.GetValue(q).ToStringTrim(), 
+                        foodNames_en = q.GetProperty("foodNames_en"+y.ToStringTrim().Last()).ToStringTrim()
                     });
 
                 }).Where(q=>!string.IsNullOrWhiteSpace(q.foodNames)).ToList();
@@ -1790,8 +1805,8 @@ namespace Aden.DAL.MenuOrder
 
                 if (list != null && list.Any()) //与新记录不匹配的旧记录
                     tmp = savedList.GroupJoin(list,
-                        a => new { mealDate = DateTime.Parse(a.mealDate), mealCode = a.mealCode, windowType = a.windowType, foodNames = a.foodNames, sort = a.sort },
-                        b => new { mealDate = DateTime.Parse(b.startDate), mealCode = b.mealCode, windowType = b.windowType, foodNames = b.foodNames, sort = b.sort },
+                        a => new { mealDate = DateTime.Parse(a.mealDate), mealCode = a.mealCode, windowType = a.windowType, foodNames = a.foodNames, sort = a.sort,foodNames_en = a.foodNames_en, windowType_en = a.windowType_en },
+                        b => new { mealDate = DateTime.Parse(b.startDate), mealCode = b.mealCode, windowType = b.windowType, foodNames = b.foodNames, sort = b.sort, foodNames_en = b.foodNames_en, windowType_en = b.windowType_en },
                         (a, b) => new { a.id, b }).Where(q => q.b == null || !q.b.Any()).Select(q => q.id);
 
                 if (tmp.Any())
@@ -1809,27 +1824,29 @@ namespace Aden.DAL.MenuOrder
             #region 添加
 
             sql = "INSERT INTO SUZCATMENU (SITEGUID,MEALDATE,MEALTYPE,WINDOWTYPE,FOODNAMES,CREATETIME, " +
-                   "CREATEUSER,SORT,MEALCODE) " +
-                   "select top 1 '{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}' " +
+                   "CREATEUSER,SORT,MEALCODE,WINDOWTYPE_EN,FOODNAMES_EN) " +
+                   "select top 1 '{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}' " +
                    "where not exists(" +
                     "select top 1 1 from SUZCATMenu " +
                     "where deleteuser is null and siteguid = '{0}' and mealdate = '{1}' " +
-                    "and mealcode = '{8}' and WindowType = '{3}' and FoodNames = '{4}' and sort='{7}')";
+                    "and mealcode = '{8}' and WindowType = '{3}' and FoodNames = '{4}' and sort='{7}' and windowType_en='{9}' and FoodNames_en='{10}')";
 
             var qry = list;
             if (savedList != null && savedList.Any())
                 qry = list.GroupJoin(savedList,
-                   a => new { mealDate = DateTime.Parse(a.startDate), mealCode = a.mealCode, windowType = a.windowType, foodNames = a.foodNames, sort = a.sort },
-                   b => new { mealDate = DateTime.Parse(b.mealDate), mealCode = b.mealCode, windowType = b.windowType, foodNames = b.foodNames, sort = b.sort },
+                   a => new { mealDate = DateTime.Parse(a.startDate), mealCode = a.mealCode, windowType = a.windowType, foodNames = a.foodNames, sort = a.sort, foodNames_en = a.foodNames_en, windowType_en = a.windowType_en },
+                   b => new { mealDate = DateTime.Parse(b.mealDate), mealCode = b.mealCode, windowType = b.windowType, foodNames = b.foodNames, sort = b.sort, foodNames_en = b.foodNames_en, windowType_en = b.windowType_en },
                    (a, b) => new { a, b }).Where(q => q.b == null || !q.b.Any()).Select(q=>q.a).ToList();
 
             if(qry != null && qry.Any())
                 sqls.Append(string.Join("; ",qry.Select(q => string.Format(sql, siteGuid, q.startDate, q.meal,
-                    q.windowType, q.foodNames, now.ToString("yyyy-M-d H:m:s "), user,q.sort, q.mealCode))));
+                    q.windowType,q.foodNames, now.ToString("yyyy-M-d H:m:s "), user,q.sort, q.mealCode,q.windowType_en,q.foodNames_en))));
             #endregion
 
             int result = SqlServerHelper.Execute(SqlServerHelper.salesorderConn(), sqls.ToString());
+            
             //int result = 0;
+
             return result;
         }
 

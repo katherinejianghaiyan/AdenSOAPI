@@ -461,7 +461,8 @@ namespace Aden.DAL.SiteDIY
 
                 if (SurveySummary == null || !SurveySummary.Any())
                 {
-                    list = SiteSurveyDetails((string)param["siteGuid"], filterDate);
+                    string siteGuid = string.Format("{0}{1}{0}", "'", (string)param["siteGuid"]); 
+                    list = SiteSurveyDetails(siteGuid, filterDate);
                 }
                 else
                 {
@@ -607,7 +608,7 @@ namespace Aden.DAL.SiteDIY
                 string strSql = string.Format("SELECT DISTINCT A2.SORT,A2.ITEMNAME AS SURVEYITEM,A1.CREATETIME,A1.HEADGUID,A1.LINEGUID,A1.USERANSWER,A1.CREATETIME,A1.CREATEUSER AS CREATEUSERID,A2.DISPLAYZONE,A2.ITEMSTYLE "
                     + "FROM TBLSURVEYRESPONSEDETAILS (NOLOCK) A1,TBLSURVEYLINESDEF (NOLOCK) A2,TBLSURVEYHEADDEF (NOLOCK) A3 "
                     + "WHERE A2.DELETETIME IS NULL AND A1.LINEGUID = A2.LINEGUID AND A3.HEADGUID = A2.HEADGUID "
-                    + "AND A1.CREATEUSER<>'' AND A1.SITEGUID in ('{0}') {1} "
+                    + "AND A1.CREATEUSER<>'' AND A1.SITEGUID in ({0}) {1} "
                     + "ORDER BY A1.CREATEUSER, A1.CREATETIME, A2.SORT ", siteGuid,filterDate);
                 // 微信用户账号列表
                 string userSql = string.Format("SELECT CONVERT(VARCHAR,A1.USERID) AS CREATEUSERID,A1.WECHATID,A2.CREATETIME LOGINTIME "

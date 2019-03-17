@@ -14,6 +14,7 @@ namespace Aden.Model.MenuData
         public string mealDate { get; set; }
         public string mealCode { get; set; }
         public string windowType { get; set; }
+        public string windowType_en { get; set; }
         public string foodNames { get; set; }
         public string foodNames1 { get; set; }
         public string foodNames2 { get; set; }
@@ -22,6 +23,14 @@ namespace Aden.Model.MenuData
         public string foodNames5 { get; set; }
         public string foodNames6 { get; set; }
         public string foodNames7 { get; set; }
+        public string foodNames_en { get; set; }
+        public string foodNames_en1 { get; set; }
+        public string foodNames_en2 { get; set; }
+        public string foodNames_en3 { get; set; }
+        public string foodNames_en4 { get; set; }
+        public string foodNames_en5 { get; set; }
+        public string foodNames_en6 { get; set; }
+        public string foodNames_en7 { get; set; }
         public string createTime { get; set; }
         public string createUser { get; set; }
         public string deleteTime { get; set; }
